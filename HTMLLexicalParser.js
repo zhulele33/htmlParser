@@ -49,12 +49,13 @@ function HTMLLexicalParser(syntaxer){
         if (/[\t \f\n]/.test(c)) {
             return beforeAttributeName
         }
-        if(/[a-zA-Z]/.test(c)){
-            return attributeName
-        }
         attribute = new Attribute()
         attribute.name = c.toLowerCase()
         attribute.value = ''
+        if(/[a-zA-Z]/.test(c)){
+          return attributeName
+        }
+
         return attributeName
     }
     var attributeName = function(c){
@@ -86,6 +87,7 @@ function HTMLLexicalParser(syntaxer){
             return beforeAttributeName
         }
         attribute.value += c
+        token[attribute.name] = attribute.value
         return attributeValueQuoted
     }
     var attributeValue = function(c){
